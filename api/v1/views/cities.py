@@ -8,7 +8,8 @@ from models.city import City
 from flask import abort, request, jsonify
 
 
-@app_views.route("/states/<state_id>/cities", strict_slashes=False, methods=["GET"])
+@app_views.route("/states/<state_id>/cities", strict_slashes=False, 
+                 methods=["GET"])
 def cities(state_id):
     """show cities"""
     cities_list = []
@@ -21,7 +22,8 @@ def cities(state_id):
     return jsonify(cities_list)
 
 
-@app_views.route("/cities/<city_id>", strict_slashes=False, methods=["GET"])
+@app_views.route("/cities/<city_id>", strict_slashes=False, 
+                 methods=["GET"])
 def cities_id(city_id):
     """Retrieves a City object"""
     city = storage.get(City, city_id)
@@ -30,7 +32,8 @@ def cities_id(city_id):
     return jsonify(city.to_dict())
 
 
-@app_views.route("/cities/<city_id>", strict_slashes=False, methods=["DELETE"])
+@app_views.route("/cities/<city_id>", strict_slashes=False, 
+                 methods=["DELETE"])
 def city_delete(city_id):
     """delete method"""
     obj = storage.get(City, city_id)
@@ -58,7 +61,8 @@ def create_city(state_id):
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route("/cities/<city_id>", strict_slashes=False, methods=["PUT"])
+@app_views.route("/cities/<city_id>", strict_slashes=False, 
+                 methods=["PUT"])
 def update_city(city_id):
     """update city"""
     obj = storage.get(City, city_id)
