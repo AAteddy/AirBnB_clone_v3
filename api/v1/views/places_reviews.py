@@ -2,12 +2,12 @@
 """State objects that handles all default RESTFul API actions"""
 
 from api.v1.views import app_views
-from flask import abort, request, jsonify
-from models.city import City
-from models.place import Place
-from models.review import Review
 from models import storage
+from models.place import Place
+from models.city import City
 from models.user import User
+from models.review import Review
+from flask import abort, request, jsonify
 
 
 @app_views.route("places/<place_id>/reviews", strict_slashes=False,
