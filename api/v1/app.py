@@ -10,8 +10,10 @@ import os
 # Global Flask Application Variable: app
 app = Flask(__name__)
 
+
 # Cross-Origin Resource Sharing
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
 
 # app_views BluePrint defined in api.v1.views with url prefix
 app.register_blueprint(app_views, url_prefix="/api/v1")
@@ -21,8 +23,8 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 @app.teardown_appcontext
 def teardown_db(exp):
     """
-    after each request, this method calls .close() (i.e. .remove()) on
-    the current SQLAlchemy Session
+    after each request, this method calls .close() 
+    (i.e. .remove()) on the current SQLAlchemy Session
     """
     storage.close()
 
@@ -38,12 +40,6 @@ def handles_400(exp):
     """Handles 400 errors."""
     message = exp.description
     return message, 400
-
-
-#@app.teardown_appcontext
-#def close(ctx):
-#    storage.close()
-
 
 
 # flask server environmental setup
