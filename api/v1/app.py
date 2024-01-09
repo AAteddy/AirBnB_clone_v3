@@ -10,10 +10,8 @@ import os
 # Global Flask Application Variable: app
 app = Flask(__name__)
 
-
 # Cross-Origin Resource Sharing
 CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
-
 
 # app_views BluePrint defined in api.v1.views with url prefix
 app.register_blueprint(app_views, url_prefix="/api/v1")
