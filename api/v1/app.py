@@ -30,9 +30,7 @@ def teardown_db(exp):
 @app.errorhandler(404)
 def handles_404(exp):
     """Handles 404 errors."""
-    message = exp.description
-    return message, 404
-    #return {"error": "Not found"}, 404
+    return {"error": "Not found"}, 404
 
 
 @app.errorhandler(400)
