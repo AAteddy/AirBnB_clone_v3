@@ -2,17 +2,17 @@
 """State objects that handles all default RESTFul API actions"""
 
 from api.v1.views import app_views
-from models import storage
-from models.place import Place
-from models.city import City
-from models.user import User
 from flask import abort, request, jsonify
+from models.city import City
+from models.place import Place
+from models import storage
+from models.user import User
 
 
 @app_views.route("/cities/<city_id>/places", strict_slashes=False,
                  methods=["GET"])
 def places(city_id):
-    """show places"""
+    """show places with GET method"""
     places_list = []
     city = storage.get(City, city_id)
     if city is None:
@@ -25,7 +25,7 @@ def places(city_id):
 
 @app_views.route("/places/<place_id>", strict_slashes=False, methods=["GET"])
 def get_place(place_id):
-    """Retrieves a City object"""
+    """Retrieves a City object with GET method using Place Id"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -35,7 +35,7 @@ def get_place(place_id):
 @app_views.route("/places/<place_id>", strict_slashes=False,
                  methods=["DELETE"])
 def place_delete(place_id):
-    """delete method"""
+    """delete Place method with Place id"""
     obj = storage.get(Place, place_id)
     if obj is None:
         abort(404)
@@ -47,7 +47,7 @@ def place_delete(place_id):
 @app_views.route("/cities/<city_id>/places", strict_slashes=False,
                  methods=["POST"])
 def create_place(city_id):
-    """create a new post req"""
+    """create a new Place Post req with City Id"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
@@ -68,7 +68,7 @@ def create_place(city_id):
 
 @app_views.route("/places/<place_id>", strict_slashes=False, methods=["PUT"])
 def update_placey(place_id):
-    """update place"""
+    """update place method with Place Id"""
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
@@ -76,10 +76,8 @@ def update_placey(place_id):
     if not data:
         abort(400, "Not a JSON")
     place.name = data.get("name", place.name)
-    place.description = data.get("description",
-                                 place.description)
-    place.number_rooms = data.get("number_rooms",
-                                  place.number_rooms)
+    place.description = data.get("description", place.description)
+    place.number_rooms = data.get("number_rooms", place.number_rooms)
     place.number_bathrooms = data.get("number_bathrooms",
                                       place.number_bathrooms)
     place.max_guest = data.get("max_guest", place.max_guest)
