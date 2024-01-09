@@ -2,16 +2,17 @@
 """State objects that handles all default RESTFul API actions"""
 
 from api.v1.views import app_views
-from models import storage
 from models.amenity import Amenity
 from flask import abort, request, jsonify
+from models import storage
+
 
 
 @app_views.route("/amenities", strict_slashes=False, methods=["GET"])
 @app_views.route("/amenities/<amenity_id>", strict_slashes=False,
                  methods=["GET"])
 def amenity(amenity_id=None):
-    """show amenity and amenity with id"""
+    """show amenity and amenity with id using GET method"""
     amenity_list = []
     if amenity_id is None:
         all_objs = storage.all(Amenity).values()
@@ -19,16 +20,16 @@ def amenity(amenity_id=None):
             amenity_list.append(k.to_dict())
         return jsonify(amenity_list)
     else:
-        result = storage.get(Amenity, amenity_id)
-        if result is None:
+        res = storage.get(Amenity, amenity_id)
+        if res is None:
             abort(404)
-        return jsonify(result.to_dict())
+        return jsonify(res.to_dict())
 
 
 @app_views.route("/amenities/<amenity_id>", strict_slashes=False,
                  methods=["DELETE"])
 def amenity_delete(amenity_id):
-    """delete method"""
+    """delete method with Amenity Id"""
     obj = storage.get(Amenity, amenity_id)
     if obj is None:
         abort(404)
@@ -39,7 +40,7 @@ def amenity_delete(amenity_id):
 
 @app_views.route("/amenities", strict_slashes=False, methods=["POST"])
 def create_amenity():
-    """create a new post req"""
+    """create a new Post method req"""
     data = request.get_json(force=True, silent=True)
     if not data:
         abort(400, "Not a JSON")
@@ -53,7 +54,7 @@ def create_amenity():
 @app_views.route("/amenities/<amenity_id>", strict_slashes=False,
                  methods=["PUT"])
 def update_amenity(amenity_id):
-    """update amenity"""
+    """update method with Amenity Id"""
     obj = storage.get(Amenity, amenity_id)
     if obj is None:
         abort(404)
